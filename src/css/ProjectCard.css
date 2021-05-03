@@ -1,0 +1,22 @@
+.card.project-entry {
+  width: 70em;
+}
+
+.card-title {
+  color: blue;
+  display: inline-block;
+  margin-right: 2em;
+  margin-left: 1em;
+}
+
+.card-subtitle {
+  display: inline;
+}
+
+.card-text.text-dates {
+  float: right;
+}
+
+.card-text.text-dates.start-date {
+  margin-right: 5em;
+}
