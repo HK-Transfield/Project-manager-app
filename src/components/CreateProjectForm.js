@@ -1,5 +1,6 @@
 import React from "react";
 import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import '../css/ProjectForm.css';
 
 const initialState = {
@@ -10,7 +11,7 @@ const initialState = {
     end_date: ""
 }
 
-export default class ProjectForm extends React.Component {
+export default class CreateProjectForm extends React.Component {
     state = initialState;
 
     validate = () => {
@@ -43,7 +44,7 @@ export default class ProjectForm extends React.Component {
                 <Form.Group controlId='formProjectDetails'>
                         <Form.Control placeholder='Project Name'/>
                         <Form.Control placeholder='Project ID'/>
-                        <Form.Control placeholder='Project Description'/>
+                        <Form.Control as='textarea' placeholder='Project Description'/>
                 </Form.Group>
 
                     <Form.Group controlId='formProjectDates'>
@@ -52,6 +53,7 @@ export default class ProjectForm extends React.Component {
                         <Form.Label>End Date</Form.Label>
                         <Form.Control type="date" placeholder='dd/mm/yyyy'/>
                     </Form.Group>
+                    <Button variant='dark' type="submit" block>Create new project</Button>
                 </Form>
            </div>
         ); 
