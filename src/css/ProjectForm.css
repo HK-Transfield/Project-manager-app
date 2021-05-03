@@ -1,0 +1,12 @@
+.form-container {
+  width: 40%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: "Nunito", sans-serif;
+}
+
+.form-header-container {
+  text-align: center;
+  margin-bottom: 5px;
+}

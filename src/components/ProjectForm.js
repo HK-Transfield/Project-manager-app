@@ -27,24 +27,32 @@ export default class ProjectForm extends React.Component {
             projectIdentifierError = "Project ID cannot be blank";
     }
 
+    handleSubmit = (event) => {
+        event.preventDefault();
+        console.log(this.state);
+    }
+
     render() {
         return(
            <div className='form-container'>
-                <div>HI</div>
-            <Form>
-               <Form.Group controlId='formProjectDetails'>
-                    <Form.Control placeholder='Project Name'/>
-                    <Form.Control placeholder='Project ID'/>
-                    <Form.Control placeholder='Project Description'/>
-               </Form.Group>
-
-                <Form.Group controlId='formProjectDates'>
-                    <Form.Label>Start Date</Form.Label>
-                    <Form.Control type="date" placeholder='dd/mm/yyyy'/>
-                    <Form.Label>End Date</Form.Label>
-                    <Form.Control type="date" placeholder='dd/mm/yyyy'/>
+                <div className='form-header-container'>
+                    <h1 className='form-header'>Create Project</h1>
+                </div>
+                <hr/>
+                <Form>
+                <Form.Group controlId='formProjectDetails'>
+                        <Form.Control placeholder='Project Name'/>
+                        <Form.Control placeholder='Project ID'/>
+                        <Form.Control placeholder='Project Description'/>
                 </Form.Group>
-            </Form>
+
+                    <Form.Group controlId='formProjectDates'>
+                        <Form.Label>Start Date</Form.Label>
+                        <Form.Control type="date" placeholder='dd/mm/yyyy'/>
+                        <Form.Label>End Date</Form.Label>
+                        <Form.Control type="date" placeholder='dd/mm/yyyy'/>
+                    </Form.Group>
+                </Form>
            </div>
         ); 
     }
