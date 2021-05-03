@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
-import ProjectForm from './components/ProjectForm';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import CreateProjectForm from './components/CreateProjectForm';
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
     //     </a>
     //   </header>
     // </div>
-    <ProjectForm/>
+    <CreateProjectForm/>
   );
 }
 
