@@ -1,12 +1,16 @@
-.card.project-entry {
+/* .card.project-entry {
   width: 70em;
-}
+} */
 
 .card-title {
   color: blue;
   display: inline-block;
   margin-right: 2em;
   margin-left: 1em;
+}
+
+.card-details {
+  float: left;
 }
 
 .card-subtitle {

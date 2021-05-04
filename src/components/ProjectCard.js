@@ -17,11 +17,13 @@ const ProjectCard = ({projectName, description, projectIdentifier, start_date, e
     return(
         <Card className='project-entry'>
             <Card.Body>
-                <Button variant='danger'>X</Button>
-                <OverlayTrigger trigger='hover' placement='right' overlay={popover(description)}>
-                    <Card.Title>Project {projectIdentifier}</Card.Title>
-                </OverlayTrigger>
-                <Card.Subtitle className='mb-2 text-muted'>{projectName}</Card.Subtitle>
+                <div className='card-details'>
+                    <Button variant='danger'>X</Button>
+                    <OverlayTrigger placement='right' overlay={popover(description)}>
+                        <Card.Title>Project {projectIdentifier}</Card.Title>
+                    </OverlayTrigger>
+                    <Card.Subtitle className='mb-2 text-muted'>{projectName}</Card.Subtitle>
+                </div>
                 <Card.Text className='text-dates end-date'>{end_date}</Card.Text>
                 <Card.Text className='text-dates start-date'>{start_date}</Card.Text>
             </Card.Body>
