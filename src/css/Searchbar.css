@@ -1,0 +1,9 @@
+.searchbar {
+  width: 500px;
+  margin-left: 15px;
+}
+
+.form-control.test {
+  width: 200px;
+  display: inline-block;
+}

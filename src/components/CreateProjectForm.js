@@ -53,7 +53,7 @@ export default class CreateProjectForm extends React.Component {
                         <Form.Label>End Date</Form.Label>
                         <Form.Control type="date" placeholder='dd/mm/yyyy'/>
                     </Form.Group>
-                    <Button variant='dark' type="submit" block>Create new project</Button>
+                    <Button className='tester' variant='dark' type="submit" block>Create Project</Button>
                 </Form>
            </div>
         ); 

@@ -9,6 +9,10 @@
   margin-left: 1em;
 }
 
+.card.project-entry {
+  width: 70em;
+}
+
 .card-details {
   float: left;
 }

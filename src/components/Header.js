@@ -1,34 +1,19 @@
-import React, {useState} from "react";
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
-import CreateProjectForm from './CreateProjectForm'; 
+import React, {useState} from "react"; 
+import DisplayModal from './DisplayModal';
+import Searchbar from './Searchbar';
+import '../css/Header.css';
 
 export default class Header extends React.Component {
   render() {
     return (
-      <header className="display-header">
-        <h1 className="App-title">{this.props.title}</h1>
+      <header className="header-container">
+        <h1 className="header-title">{this.props.title}</h1>
         <DisplayModal/>
+        <hr/>
+        <Searchbar/>
       </header>
     );
   }
 }
 
-const DisplayModal = () => {
-    const [showModal, setShowModal] = useState(false);
 
-    const handleCloseModal = () => setShowModal(false);
-    const handleShowModal = () => setShowModal(true);
-
-    return(
-        <div>
-            <Button variant='dark' onClick={handleShowModal}>
-                Create New Project
-            </Button>
-
-            <Modal show={showModal} onHide={handleCloseModal}>
-                    <CreateProjectForm/>
-            </Modal>
-        </div>
-    );
-}

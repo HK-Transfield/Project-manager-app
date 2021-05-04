@@ -1,2 +1,8 @@
-.display-header {
+.header-container {
+  width: inherit;
+  margin-bottom: 10px;
+}
+
+.header-title {
+  font-size: 60px;
 }
