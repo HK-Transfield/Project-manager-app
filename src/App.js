@@ -1,7 +1,7 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import CreateProjectForm from './components/CreateProjectForm';
 import ProjectCard from './components/ProjectCard';
+import Header from './components/Header';
 
 const test = [{
   "projectName": "Visitor Indicator System",
@@ -21,9 +21,8 @@ const test = [{
 
 function App() {
   return (
-    <div>
-      {/* <CreateProjectForm/> */}
-    <p>hi</p>
+    <div className='App'>
+      <Header title='Project'/>
       {test.map(item => {
         return <ProjectCard {...item} key={item.projectIdentifier}/>
       })}
