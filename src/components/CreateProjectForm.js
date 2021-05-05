@@ -1,7 +1,7 @@
 import React from "react";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import '../css/ProjectForm.css';
+import '../css/CreateProjectForm.css';
 
 const initialState = {
     projectName: "",
@@ -53,7 +53,7 @@ export default class CreateProjectForm extends React.Component {
                         <Form.Label>End Date</Form.Label>
                         <Form.Control type="date" placeholder='dd/mm/yyyy'/>
                     </Form.Group>
-                    <Button variant='dark' type="submit" block>Create new project</Button>
+                    <Button className='btn-submit-project' variant='dark' type="submit" block>Create Project</Button>
                 </Form>
            </div>
         ); 

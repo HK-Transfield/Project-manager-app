@@ -1,9 +1,6 @@
 .form-container {
-  width: 40%;
   justify-content: center;
-  margin-left: auto;
-  margin-right: auto;
-  font-family: "Source Sans Pro", sans-serif;
+  margin: 20px;
 }
 
 .form-header-container {
@@ -26,4 +23,8 @@
   margin-bottom: 0px;
   color: #4639a7;
   font-weight: bolder;
+}
+
+.btn.btn-submit-project {
+  border: none;
 }

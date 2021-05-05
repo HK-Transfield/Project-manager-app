@@ -1,0 +1,10 @@
+.btn.btn-show-modal {
+  opacity: 0.8;
+  filter: contrast(1.1);
+  transition: 0.3s;
+  float: right;
+}
+
+.btn.btn-show-modal:hover {
+  opacity: 1;
+}

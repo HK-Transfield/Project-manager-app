@@ -1,0 +1,15 @@
+.searchbar {
+  width: 500px;
+}
+
+.form-control.test {
+  width: 200px;
+  display: inline-block;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
+}
+
+.btn.dropdown-toggle {
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
+}
