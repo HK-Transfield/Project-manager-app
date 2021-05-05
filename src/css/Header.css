@@ -1,8 +1,13 @@
 .header-container {
-  width: inherit;
-  margin-bottom: 10px;
+  width: 100vw;
+  height: 6em;
+  margin-bottom: 30px;
+  background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+  text-align: center;
 }
 
 .header-title {
   font-size: 60px;
+  color: white;
+  display: inline;
 }

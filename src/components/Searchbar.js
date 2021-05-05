@@ -12,6 +12,7 @@ const Searchbar = ({keyword, setKeyword}) => {
                 
             >
                 <DropdownButton
+                    className='btn-sortby'
                     variant='secondary'
                     title='Sort By...'
                 >
@@ -23,7 +24,7 @@ const Searchbar = ({keyword, setKeyword}) => {
                 </DropdownButton>
             </InputGroup.Prepend>
             <Form.Control
-               className='test'
+                className='test'
                 value={keyword}
                 placeholder='Search for a project...'
             />

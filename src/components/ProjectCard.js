@@ -22,7 +22,7 @@ const ProjectCard = ({projectName, description, projectIdentifier, start_date, e
                     <OverlayTrigger placement='right' overlay={popover(description)}>
                         <Card.Title>Project {projectIdentifier}</Card.Title>
                     </OverlayTrigger>
-                    <Card.Subtitle className='mb-2 text-muted'>{projectName}</Card.Subtitle>
+                    <Card.Subtitle className='mb-2 text-muted card-name'>{projectName}</Card.Subtitle>
                 </div>
                 <Card.Text className='text-dates end-date'>{end_date}</Card.Text>
                 <Card.Text className='text-dates start-date'>{start_date}</Card.Text>

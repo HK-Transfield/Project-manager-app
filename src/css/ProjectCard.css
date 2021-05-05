@@ -3,7 +3,7 @@
 } */
 
 .card-title {
-  color: blue;
+  color: #4639a7;
   display: inline-block;
   margin-right: 2em;
   margin-left: 1em;
@@ -11,6 +11,7 @@
 
 .card.project-entry {
   width: 70em;
+  border-radius: 0px;
 }
 
 .card-details {

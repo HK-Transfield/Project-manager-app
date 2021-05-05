@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import CreateProjectForm from './CreateProjectForm';
+import '../css/DisplayModal.css';
 
 const DisplayModal = () => {
     const [showModal, setShowModal] = useState(false);
@@ -11,7 +12,11 @@ const DisplayModal = () => {
 
     return(
         <div>
-            <Button variant='dark' onClick={handleShowModal}>
+            <Button  
+                className='btn-show-modal'
+                variant='outline-primary' 
+                onClick={handleShowModal}
+            >
                 Create A New Project
             </Button>
 
