@@ -2,7 +2,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ProjectCard from './components/ProjectCard';
 import Header from './components/Header';
-import DisplayModal from './components/DisplayModal';
+import DisplayProjectForm from './components/DisplayProjectForm';
 import Searchbar from './components/Searchbar';
 
 
@@ -13,7 +13,7 @@ function App() {
       <Header title='Project Manager'/>
       <div className='project_manager-container'>
         <div className='input-container'>
-            <DisplayModal/>
+            <DisplayProjectForm/>
             <Searchbar/>
         </div>
         <div className='project_cards-container'>
