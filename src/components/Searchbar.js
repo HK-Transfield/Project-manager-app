@@ -8,11 +8,8 @@ import '../css/Searchbar.css';
 const Searchbar = ({keyword, setKeyword}) => {
     return(
         <InputGroup className='searchbar'>
-            <InputGroup.Prepend
-                
-            >
+            <InputGroup.Prepend>
                 <DropdownButton
-                    className='btn-sortby'
                     variant='secondary'
                     title='Sort By...'
                 >
@@ -24,7 +21,7 @@ const Searchbar = ({keyword, setKeyword}) => {
                 </DropdownButton>
             </InputGroup.Prepend>
             <Form.Control
-                className='test'
+               className='test'
                 value={keyword}
                 placeholder='Search for a project...'
             />
