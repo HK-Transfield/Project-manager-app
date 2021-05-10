@@ -205,7 +205,7 @@ class CreateProjectForm extends React.Component {
   * 
   * @returns The DOM containing the modal and form 
   */
-const DisplayProjectForm = () => {
+const CreateProjectModal = () => {
     const [showModal, setShowModal] = useState(false);
 
     const handleCloseModal = () => setShowModal(false);
@@ -229,4 +229,4 @@ const DisplayProjectForm = () => {
     );
 }
 
-export default DisplayProjectForm;
+export default CreateProjectModal;
