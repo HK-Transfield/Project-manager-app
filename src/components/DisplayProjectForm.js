@@ -1,11 +1,13 @@
 import React, {useState} from "react";
 import Form from 'react-bootstrap/Form';
+import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import '../css/CreateProjectForm.css';
 import '../css/DisplayModal.css';
 
 const initialState = {
+    isValid: false,
     fields: {
         projectName: "",
         projectIdentifier: "",
@@ -42,14 +44,18 @@ class CreateProjectForm extends React.Component {
 
         // description validation
         if(!fields['description']) 
-            errors['descriptionError'] = "Please enter a description of your project."
+            errors['descriptionError'] = "Please enter a description of your project.";
 
         // date validations
         if(!fields['start_date']) 
-            errors['startDateError'] = "Please enter a start date for your project."
+            errors['startDateError'] = "Please enter a start date for your project.";
 
         if(!fields['end_date']) 
-            errors['endDateError'] = "Please enter an end date for your project."
+            errors['endDateError'] = "Please enter an end date for your project.";
+        
+        // make sure that the end date is not before the start date
+        if((new Date(fields['end_date']).getTime() < new Date(fields['start_date']).getTime()))
+            errors['endDateError'] = "End date cannot be before the start date.";   
 
         // there are errors in the form
         if(errors) {
@@ -76,10 +82,17 @@ class CreateProjectForm extends React.Component {
     }
 
     handleSubmit = (event) => {
-        event.preventDefault();
-        const isValid = this.validate();
+        const form = event.currentTarget;
 
-        if(isValid) {
+        if (form.checkValidity() === false) {
+            event.preventDefault(); // cancels Event (Stops HTML Default Form Submit)
+            event.stopPropagation(); // prevents Event Bubbling To Parent Elements
+        }
+
+        this.setState({isValid: this.validate()});
+
+        if(this.state.isValid) {
+            event.preventDefault();
             this.setState(initialState);
         }
     }
@@ -91,56 +104,93 @@ class CreateProjectForm extends React.Component {
                     <h1 className='form-header'>Create Project</h1>
                 </div>
                 <hr/>
-                <Form onSubmit={this.handleSubmit}>
+                <Form noValidate validated={this.state.isValid} onSubmit={this.handleSubmit}>
                     <Form.Group controlId='formProjectDetails'>
-                            <Form.Control 
-                                name='projectName'
-                                type='text'
-                                placeholder='Project Name' 
-                                value={this.state.fields['projectName']}
-                                onChange={this.handleChange}
-                            />
-                            <span>
-                                {this.state.errors['projectNameError']}
-                            </span>
-                            <Form.Control 
-                                name='projectIdentifier'
-                                type='text'
-                                placeholder='Project ID' 
-                                value={this.state.fields['projectIdentifier']}
-                                onChange={this.handleChange}
-                            />
-                            <Form.Control 
-                                name='description'
-                                as='textarea'
-                                placeholder='Project Description'
-                                onChange={this.handleChange} 
-                            />
+
+                        {/*|| Project name validation */}
+                        <Form.Control 
+                            required
+                            name='projectName'
+                            type='text'
+                            placeholder='Project Name' 
+                            value={this.state.fields['projectName']}
+                            onChange={this.handleChange}
+                            isInvalid={!!this.state.errors['projectNameError']}
+                        />
+                        <FormControl.Feedback type="invalid">
+                            {this.state.errors['projectNameError']}
+                        </FormControl.Feedback>
+                        <br/>
+                        
+                        {/*|| Project identifier validation */}
+                        <Form.Control 
+                            required
+                            name='projectIdentifier'
+                            type='text'
+                            placeholder='Project ID' 
+                            value={this.state.fields['projectIdentifier']}
+                            onChange={this.handleChange}
+                            isInvalid={!!this.state.errors['projectIdentifierError']}
+                        />
+                         <FormControl.Feedback type="invalid">
+                            {this.state.errors['projectIdentifierError']}
+                        </FormControl.Feedback>
+                        <br/>
+                        
+                        {/*|| Project description validation */}
+                        <Form.Control 
+                            required
+                            name='description'
+                            as='textarea'
+                            placeholder='Project Description'
+                            onChange={this.handleChange} 
+                            isInvalid={!!this.state.errors['descriptionError']}
+                        />
+                        <FormControl.Feedback type="invalid">
+                            {this.state.errors['descriptionError']}
+                        </FormControl.Feedback>
                     </Form.Group>
 
+                        
                     <Form.Group controlId='formProjectDates'>
+
+                        {/*|| Project start date validation*/}
                         <Form.Label>Start Date</Form.Label>
                         <Form.Control 
+                            required
                             name='start_date'
-                            type="date" 
+                            type='date' 
                             placeholder='dd/mm/yyyy' 
                             value={this.state.fields['start_date']}
                             onChange={this.handleChange}
-                            />
+                            isInvalid={!!this.state.errors['startDateError']}
+                        />
+                        <FormControl.Feedback type="invalid">
+                            {this.state.errors['startDateError']}
+                        </FormControl.Feedback>
+                        <br/>
+                        
+                        {/*|| Project end date validation*/}
                         <Form.Label>End Date</Form.Label>
                         <Form.Control 
+                            required
                             name='end_date'
-                            type="date" 
+                            type='date' 
                             placeholder='dd/mm/yyyy'
                             value={this.state.fields['end_date']}
                             onChange={this.handleChange}
+                            isInvalid={!!this.state.errors['endDateError']}
                         />
+                        <FormControl.Feedback type="invalid">
+                            {this.state.errors['endDateError']}
+                        </FormControl.Feedback>
                     </Form.Group>
                     <Button 
                         className='btn-submit-project' 
                         variant='dark' 
-                        type="submit" 
-                    block>
+                        type='submit' 
+                        block
+                    >
                         Create Project
                     </Button>
                 </Form>
