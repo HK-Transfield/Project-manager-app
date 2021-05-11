@@ -5,21 +5,26 @@ import Header from './components/Header';
 import CreateProjectModal from './components/CreateProjectModal';
 import Searchbar from './components/Searchbar';
 import ProjectCollection from './components/ProjectCollection';
+import { useSelector } from 'react-redux';
 
-function App() {
+const App = () => {
 
+  const myProjects = useSelector(state => state.myProjects);
   const [projects, setProjects] = useState([]);
 
-  useEffect(() => {
-    fetch('./data.json')
-    .then(response => response.json())
-    .then(result => {
-      const projects = result.map(project => {
-        return project;
-      });
-      setProjects(projects);
-    });
-  });     
+  console.log('------GOOD STUFF-------')
+  console.log(myProjects)
+
+  // useEffect(() => {
+  //   fetch('./data.json')
+  //   .then(response => response.json())
+  //   .then(result => {
+  //     const projects = result.map(project => {
+  //       return project;
+  //     });
+  //     setProjects(projects);
+  //   });
+  // });     
 
   return (
     <div className='App'>
@@ -29,7 +34,8 @@ function App() {
             <CreateProjectModal/>
             <Searchbar/>
         </div>
-        <ProjectCollection projects={projects}/>
+        {/* <ProjectCollection projects={projects}/> */}
+        
       </div>
     </div>
   );
