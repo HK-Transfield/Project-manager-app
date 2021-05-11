@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { connect } from 'react-redux';
 import '../css/CreateProjectForm.css';
 import '../css/DisplayModal.css';
 
@@ -77,8 +78,13 @@ class CreateProjectForm extends React.Component {
             prevState.fields[name] = value;
             return {
                fields: prevState.fields
-            };
-        });
+            }
+        },
+           () => this.props.dispatch({
+                type: "SET_FORMVALUES",
+                payload: this.state.values
+            })
+        );
     }
 
     handleSubmit = (event) => {
@@ -94,6 +100,10 @@ class CreateProjectForm extends React.Component {
         if(this.state.isValid) {
             event.preventDefault();
             this.setState(initialState);
+
+            this.props.dispatch({
+                type: 'SUBMIT_FORM'
+            });
         }
     }
 
@@ -229,4 +239,8 @@ const CreateProjectModal = () => {
     );
 }
 
-export default CreateProjectModal;
+const mapStateToProps = (state) =>({
+        message: state.message
+    });
+
+export default connect(mapStateToProps)(CreateProjectModal);

@@ -13,7 +13,6 @@ const popover = (description) => (
 
 // https://blog.bitsrc.io/add-a-simple-search-function-to-react-app-without-a-server-22deda8966cd
 const ProjectCard = ({projectName, description, projectIdentifier, start_date, end_date}) => {
-    console.log(projectName);
     return(
         <Card className='project-entry'>
             <Card.Body>
