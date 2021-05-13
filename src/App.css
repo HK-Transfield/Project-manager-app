@@ -10,10 +10,6 @@
   margin-left: auto;
   margin-right: auto;
 }
-.project_cards-container {
-  width: inherit;
-  box-shadow: 5px 5px 10px #d3d3d3;
-}
 
 .input-container {
   background-color: white;

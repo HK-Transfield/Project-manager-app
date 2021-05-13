@@ -1,29 +1,43 @@
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ProjectCard from './components/ProjectCard';
 import Header from './components/Header';
-import DisplayProjectForm from './components/DisplayProjectForm';
+import CreateProjectModal from './components/CreateProjectModal';
 import Searchbar from './components/Searchbar';
+import ProjectCollection from './components/ProjectCollection';
+import { useSelector, useDispatch } from 'react-redux';
 
+const App = () => {
 
-function App() {
-  let projects = require('./projectData.json');
+  const myProjects = useSelector(state => state.myProjects);
+  const dispatch = useDispatch();
+  // TO-DO: Figure out a better way to make sure that useEffect does not infinitely loop
+  const [newProjects, setNewProjects] = useState(false);
+
+  useEffect(() => {
+    fetch('./data.json')
+    .then(response => response.json())
+    .then(result => {
+      result.map(project => {
+        dispatch({
+          type: 'ADD_PROJECT',
+          payload: project
+        })
+      });
+    });
+  }, [newProjects]);     
+
   return (
     <div className='App'>
       <Header title='Project Manager'/>
       <div className='project_manager-container'>
         <div className='input-container'>
-            <DisplayProjectForm/>
+            <CreateProjectModal/>
             <Searchbar/>
         </div>
-        <div className='project_cards-container'>
-          {projects.map(item => {
-            return <ProjectCard {...item} key={item.projectIdentifier}/>
-          })}
-        </div>
+        <ProjectCollection projects={myProjects}/>
       </div>
     </div>
-   
   );
 }
 

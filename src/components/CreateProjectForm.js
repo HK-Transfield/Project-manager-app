@@ -1,28 +1,34 @@
-import React, {useState} from "react";
+import React from "react";
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import { connect } from 'react-redux';
 import '../css/CreateProjectForm.css';
 import '../css/DisplayModal.css';
 
-const initialState = {
-    isValid: false,
-    fields: {
-        projectName: "",
-        projectIdentifier: "",
-        description: "",
-        start_date: "",
-        end_date: ""
-    },
-    errors: {}
-}
 
+const initialState = () => {
+    return  {
+        isValid: false,
+        fields: {
+            projectName: "",
+            projectIdentifier: "",
+            description: "",
+            start_date: "",
+            end_date: ""
+        },
+        errors: {}
+    }
+}
 class CreateProjectForm extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = initialState;
+        this.state = initialState();
+        this.projectFormRef = React.createRef();
+        
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     /**
@@ -57,11 +63,13 @@ class CreateProjectForm extends React.Component {
         if((new Date(fields['end_date']).getTime() < new Date(fields['start_date']).getTime()))
             errors['endDateError'] = "End date cannot be before the start date.";   
 
+
         // there are errors in the form
-        if(errors) {
+        if(Object.keys(errors).length > 0) {
             this.setState({errors});
             return false;
         }
+
         return true;
     }
 
@@ -70,31 +78,46 @@ class CreateProjectForm extends React.Component {
      * 
      * @param {event} event The user inputting data into the form.
      */
-    handleChange = (event) => {  
+     handleChange = (event) => {  
         const {name, value} = event.target;
 
-        this.setState(prevState => {
-            prevState.fields[name] = value;
-            return {
-               fields: prevState.fields
-            };
-        });
+        // this.setState(prevState => {
+        //     prevState.fields[name] = value;
+        //     return {
+        //        fields: prevState.fields
+        //     };
+        // });
+
+        this.setState(
+            {
+                fields: { ...this.state.fields, [event.target.name]: event.target.value }
+            }
+        );
     }
 
     handleSubmit = (event) => {
+        event.preventDefault(); // cancels Event (Stops HTML Default Form Submit)
+        
         const form = event.currentTarget;
+        console.log('form validation: ' + this.validate())
 
-        if (form.checkValidity() === false) {
-            event.preventDefault(); // cancels Event (Stops HTML Default Form Submit)
-            event.stopPropagation(); // prevents Event Bubbling To Parent Elements
-        }
-
+        // update state to enable bootstrap form validation
         this.setState({isValid: this.validate()});
 
-        if(this.state.isValid) {
-            event.preventDefault();
-            this.setState(initialState);
+        if (form.checkValidity() === false) {
+            event.stopPropagation(); // prevents Event Bubbling To Parent Elements
+        }  else {
+            this.props.dispatch({
+                type: "ADD_PROJECT",
+                payload: this.state.fields
+            });
+            this.handleReset();
         }
+    }
+
+    handleReset = () => {
+        this.projectFormRef.current.reset();
+        this.setState({isValid: false});
     }
 
     render() {
@@ -104,7 +127,12 @@ class CreateProjectForm extends React.Component {
                     <h1 className='form-header'>Create Project</h1>
                 </div>
                 <hr/>
-                <Form noValidate validated={this.state.isValid} onSubmit={this.handleSubmit}>
+                <Form 
+                    noValidate 
+                    validated={this.state.isValid} 
+                    onSubmit={this.handleSubmit}
+                    ref={this.projectFormRef}
+                >
                     <Form.Group controlId='formProjectDetails'>
 
                         {/*|| Project name validation */}
@@ -113,7 +141,6 @@ class CreateProjectForm extends React.Component {
                             name='projectName'
                             type='text'
                             placeholder='Project Name' 
-                            value={this.state.fields['projectName']}
                             onChange={this.handleChange}
                             isInvalid={!!this.state.errors['projectNameError']}
                         />
@@ -128,7 +155,6 @@ class CreateProjectForm extends React.Component {
                             name='projectIdentifier'
                             type='text'
                             placeholder='Project ID' 
-                            value={this.state.fields['projectIdentifier']}
                             onChange={this.handleChange}
                             isInvalid={!!this.state.errors['projectIdentifierError']}
                         />
@@ -161,7 +187,6 @@ class CreateProjectForm extends React.Component {
                             name='start_date'
                             type='date' 
                             placeholder='dd/mm/yyyy' 
-                            value={this.state.fields['start_date']}
                             onChange={this.handleChange}
                             isInvalid={!!this.state.errors['startDateError']}
                         />
@@ -177,7 +202,6 @@ class CreateProjectForm extends React.Component {
                             name='end_date'
                             type='date' 
                             placeholder='dd/mm/yyyy'
-                            value={this.state.fields['end_date']}
                             onChange={this.handleChange}
                             isInvalid={!!this.state.errors['endDateError']}
                         />
@@ -186,9 +210,9 @@ class CreateProjectForm extends React.Component {
                         </FormControl.Feedback>
                     </Form.Group>
                     <Button 
+                        type='submit'
                         className='btn-submit-project' 
                         variant='dark' 
-                        type='submit' 
                         block
                     >
                         Create Project
@@ -199,34 +223,4 @@ class CreateProjectForm extends React.Component {
     }
 }
 
- /**
-  * Uses a bootstrap modal to display a create project form.
-  * This can be opened with a button
-  * 
-  * @returns The DOM containing the modal and form 
-  */
-const DisplayProjectForm = () => {
-    const [showModal, setShowModal] = useState(false);
-
-    const handleCloseModal = () => setShowModal(false);
-    const handleShowModal = () => setShowModal(true);
-
-    // https://www.pluralsight.com/guides/how-to-open-and-close-react-bootstrap-modal-programmatically
-    return(
-        <div>
-            <Button  
-                className='btn-show-modal'
-                variant='outline-primary' 
-                onClick={handleShowModal}
-            >
-                Create A New Project
-            </Button>
-
-            <Modal show={showModal} onHide={handleCloseModal}>
-                    <CreateProjectForm/>
-            </Modal>
-        </div>
-    );
-}
-
-export default DisplayProjectForm;
+export default connect(null)(CreateProjectForm);
