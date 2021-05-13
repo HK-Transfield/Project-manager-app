@@ -14,6 +14,10 @@ const App = () => {
   // TO-DO: Figure out a better way to make sure that useEffect does not infinitely loop
   const [newProjects, setNewProjects] = useState(false);
 
+  /**
+   * Lifecycle method. Used to fetch the data from the server
+   * and then add them to the redux store.
+   */
   useEffect(() => {
     fetch('./data.json')
     .then(response => response.json())
