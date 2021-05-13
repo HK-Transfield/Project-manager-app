@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import reducer from './reducer';
+import formReducer from './reducers/formReducer';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 
-const store = createStore(reducer);
+const store = createStore(formReducer);
 
 
 ReactDOM.render(

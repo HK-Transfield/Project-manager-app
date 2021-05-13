@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
+import DeleteButton from './DeleteButton';
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import '../css/ProjectCard.css';
@@ -13,11 +13,12 @@ const popover = (description) => (
 
 // https://blog.bitsrc.io/add-a-simple-search-function-to-react-app-without-a-server-22deda8966cd
 const ProjectCard = ({projectName, description, projectIdentifier, start_date, end_date}) => {
+     
     return(
         <Card className='project-entry'>
             <Card.Body>
                 <div className='card-details'>
-                    <Button variant='danger'>X</Button>
+                    <DeleteButton projectIdentifier={projectIdentifier}/>
                     <OverlayTrigger placement='right' overlay={popover(description)}>
                         <Card.Title>Project {projectIdentifier}</Card.Title>
                     </OverlayTrigger>

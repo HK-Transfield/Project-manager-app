@@ -11,12 +11,23 @@ const eventExists = (events, event) => {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
 
-    case "SUBMIT_FORM":
+    case "ADD_PROJECT":
       console.log("--- Triggered Form submission ---");
       console.log(state.myProjects);
       return {
         ...state,
         myProjects: [...state.myProjects, action.payload]
+      }
+    
+    case "DELETE_PROJECT":
+      const id = action.payload;
+      console.log('---DELETING PROJECT---')
+      console.log(id)
+      console.log(state.myProjects)
+
+      return {
+        ...state,
+        myProjects: state.myProjects.filter((myProjects) => myProjects.projectIdentifier !== id)
       }
     default:
       return state;

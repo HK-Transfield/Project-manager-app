@@ -7,23 +7,25 @@ import '../css/CreateProjectForm.css';
 import '../css/DisplayModal.css';
 
 
-const initialState = {
-    isValid: false,
-    fields: {
-        projectName: "",
-        projectIdentifier: "",
-        description: "",
-        start_date: "",
-        end_date: ""
-    },
-    errors: {}
-};
-
+const initialState = () => {
+    return  {
+        isValid: false,
+        fields: {
+            projectName: "",
+            projectIdentifier: "",
+            description: "",
+            start_date: "",
+            end_date: ""
+        },
+        errors: {}
+    }
+}
 class CreateProjectForm extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = initialState;
+        this.state = initialState();
+        this.projectFormRef = React.createRef();
         
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -61,11 +63,13 @@ class CreateProjectForm extends React.Component {
         if((new Date(fields['end_date']).getTime() < new Date(fields['start_date']).getTime()))
             errors['endDateError'] = "End date cannot be before the start date.";   
 
+
         // there are errors in the form
-        if(errors) {
+        if(Object.keys(errors).length > 0) {
             this.setState({errors});
             return false;
         }
+
         return true;
     }
 
@@ -77,18 +81,25 @@ class CreateProjectForm extends React.Component {
      handleChange = (event) => {  
         const {name, value} = event.target;
 
-        this.setState(prevState => {
-            prevState.fields[name] = value;
-            return {
-               fields: prevState.fields
-            };
-        });
+        // this.setState(prevState => {
+        //     prevState.fields[name] = value;
+        //     return {
+        //        fields: prevState.fields
+        //     };
+        // });
+
+        this.setState(
+            {
+                fields: { ...this.state.fields, [event.target.name]: event.target.value }
+            }
+        );
     }
 
     handleSubmit = (event) => {
         event.preventDefault(); // cancels Event (Stops HTML Default Form Submit)
         
         const form = event.currentTarget;
+        console.log('form validation: ' + this.validate())
 
         // update state to enable bootstrap form validation
         this.setState({isValid: this.validate()});
@@ -96,14 +107,17 @@ class CreateProjectForm extends React.Component {
         if (form.checkValidity() === false) {
             event.stopPropagation(); // prevents Event Bubbling To Parent Elements
         }  else {
-        
-            console.log(this.state.fields)
             this.props.dispatch({
-                type: "SUBMIT_FORM",
+                type: "ADD_PROJECT",
                 payload: this.state.fields
             });
-            this.setState(initialState);
+            this.handleReset();
         }
+    }
+
+    handleReset = () => {
+        this.projectFormRef.current.reset();
+        this.setState({isValid: false});
     }
 
     render() {
@@ -113,7 +127,12 @@ class CreateProjectForm extends React.Component {
                     <h1 className='form-header'>Create Project</h1>
                 </div>
                 <hr/>
-                <Form noValidate validated={this.state.isValid} onSubmit={this.handleSubmit}>
+                <Form 
+                    noValidate 
+                    validated={this.state.isValid} 
+                    onSubmit={this.handleSubmit}
+                    ref={this.projectFormRef}
+                >
                     <Form.Group controlId='formProjectDetails'>
 
                         {/*|| Project name validation */}
@@ -122,7 +141,6 @@ class CreateProjectForm extends React.Component {
                             name='projectName'
                             type='text'
                             placeholder='Project Name' 
-                            value={this.state.fields['projectName']}
                             onChange={this.handleChange}
                             isInvalid={!!this.state.errors['projectNameError']}
                         />
@@ -137,7 +155,6 @@ class CreateProjectForm extends React.Component {
                             name='projectIdentifier'
                             type='text'
                             placeholder='Project ID' 
-                            value={this.state.fields['projectIdentifier']}
                             onChange={this.handleChange}
                             isInvalid={!!this.state.errors['projectIdentifierError']}
                         />
@@ -170,7 +187,6 @@ class CreateProjectForm extends React.Component {
                             name='start_date'
                             type='date' 
                             placeholder='dd/mm/yyyy' 
-                            value={this.state.fields['start_date']}
                             onChange={this.handleChange}
                             isInvalid={!!this.state.errors['startDateError']}
                         />
@@ -186,7 +202,6 @@ class CreateProjectForm extends React.Component {
                             name='end_date'
                             type='date' 
                             placeholder='dd/mm/yyyy'
-                            value={this.state.fields['end_date']}
                             onChange={this.handleChange}
                             isInvalid={!!this.state.errors['endDateError']}
                         />

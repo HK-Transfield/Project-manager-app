@@ -5,26 +5,27 @@ import Header from './components/Header';
 import CreateProjectModal from './components/CreateProjectModal';
 import Searchbar from './components/Searchbar';
 import ProjectCollection from './components/ProjectCollection';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 const App = () => {
 
   const myProjects = useSelector(state => state.myProjects);
-  const [projects, setProjects] = useState([]);
+  const dispatch = useDispatch();
+  // TO-DO: Figure out a better way to make sure that useEffect does not infinitely loop
+  const [newProjects, setNewProjects] = useState(false);
 
-  console.log('------GOOD STUFF-------')
-  console.log(myProjects)
-
-  // useEffect(() => {
-  //   fetch('./data.json')
-  //   .then(response => response.json())
-  //   .then(result => {
-  //     const projects = result.map(project => {
-  //       return project;
-  //     });
-  //     setProjects(projects);
-  //   });
-  // });     
+  useEffect(() => {
+    fetch('./data.json')
+    .then(response => response.json())
+    .then(result => {
+      result.map(project => {
+        dispatch({
+          type: 'ADD_PROJECT',
+          payload: project
+        })
+      });
+    });
+  }, [newProjects]);     
 
   return (
     <div className='App'>
@@ -34,8 +35,7 @@ const App = () => {
             <CreateProjectModal/>
             <Searchbar/>
         </div>
-        {/* <ProjectCollection projects={projects}/> */}
-        
+        <ProjectCollection projects={myProjects}/>
       </div>
     </div>
   );
