@@ -6,7 +6,12 @@ import { connect } from 'react-redux';
 import '../css/CreateProjectForm.css';
 import '../css/DisplayModal.css';
 
-
+/**
+ * Default state when the project manager loads.
+ * No values are stored.
+ * 
+ * @returns The default state of the component.
+ */
 const initialState = () => {
     return  {
         isValid: false,
@@ -20,6 +25,18 @@ const initialState = () => {
         errors: {}
     }
 }
+
+
+/**
+ * The CreateProjectForm class will render a react-bootstrap form,
+ * allowing the user to enter in a new project. It has validation
+ * methods to ensure that the data input is correct and valid.
+ * 
+ * If the fields are all valid, the form will then dispatch a redux
+ * action and store the project object into the store.
+ * 
+ * @author Harmon Transfield
+ */
 class CreateProjectForm extends React.Component {
     constructor(props) {
         super(props);
@@ -34,7 +51,7 @@ class CreateProjectForm extends React.Component {
     /**
      * Checks that all form controls contain valid input.
      * 
-     * @returns A boolean representing whether or not the form is valid.
+     * @returns A boolean representing the validity of the form.
      */
     validate = () => {
         let fields = this.state.fields;
@@ -63,7 +80,6 @@ class CreateProjectForm extends React.Component {
         if((new Date(fields['end_date']).getTime() < new Date(fields['start_date']).getTime()))
             errors['endDateError'] = "End date cannot be before the start date.";   
 
-
         // there are errors in the form
         if(Object.keys(errors).length > 0) {
             this.setState({errors});
@@ -81,40 +97,46 @@ class CreateProjectForm extends React.Component {
      handleChange = (event) => {  
         const {name, value} = event.target;
 
-        // this.setState(prevState => {
-        //     prevState.fields[name] = value;
-        //     return {
-        //        fields: prevState.fields
-        //     };
-        // });
-
+        // update fields state with user input
         this.setState(
             {
-                fields: { ...this.state.fields, [event.target.name]: event.target.value }
+                fields: { ...this.state.fields, [name]: value }
             }
         );
     }
 
+    /**
+     * When the form is submitted, it will call the this.validate function
+     * and update the state if all fields are valid.
+     * 
+     * @param {event} event User clicks on the submit button 
+     */
     handleSubmit = (event) => {
         event.preventDefault(); // cancels Event (Stops HTML Default Form Submit)
         
         const form = event.currentTarget;
         console.log('form validation: ' + this.validate())
 
-        // update state to enable bootstrap form validation
+        // update state to call bootstrap form validation
         this.setState({isValid: this.validate()});
 
         if (form.checkValidity() === false) {
             event.stopPropagation(); // prevents Event Bubbling To Parent Elements
         }  else {
+            // store the new project
             this.props.dispatch({
                 type: "ADD_PROJECT",
                 payload: this.state.fields
             });
+
+            // clear form
             this.handleReset();
         }
     }
 
+    /**
+     * Resets the forms to show no values in form controls.
+     */
     handleReset = () => {
         this.projectFormRef.current.reset();
         this.setState({isValid: false});
@@ -222,5 +244,4 @@ class CreateProjectForm extends React.Component {
         ); 
     }
 }
-
 export default connect(null)(CreateProjectForm);
