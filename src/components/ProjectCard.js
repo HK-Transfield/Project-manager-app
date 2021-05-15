@@ -5,6 +5,12 @@ import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import '../css/ProjectCard.css';
 
+/**
+ * Displays a react-bootstrap popover component to 
+ * display the project description
+ * 
+ * @param {string} description Information that describes what the project is about.
+ */
 const popover = (description) => (
     <Popover id="popover-basic">
       <Popover.Content>{description}</Popover.Content>

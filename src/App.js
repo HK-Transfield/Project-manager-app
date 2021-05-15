@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 const App = () => {
 
-  const myProjects = useSelector(state => state.myProjects);
+  const myProjects = useSelector(state => state);
   const dispatch = useDispatch();
   // TO-DO: Figure out a better way to make sure that useEffect does not infinitely loop
   const [newProjects, setNewProjects] = useState(false);
@@ -23,13 +23,18 @@ const App = () => {
     .then(response => response.json())
     .then(result => {
       result.map(project => {
+       return (
         dispatch({
           type: 'ADD_PROJECT',
           payload: project
         })
+       );
       });
     });
-  }, [newProjects]);     
+  }, [newProjects]);    
+
+  console.log('****What is coming back****');
+  console.log(myProjects)
 
   return (
     <div className='App'>
@@ -39,7 +44,7 @@ const App = () => {
             <CreateProjectModal/>
             <Searchbar/>
         </div>
-        <ProjectCollection projects={myProjects}/>
+        <ProjectCollection projects={myProjects.filteredProjects}/>
       </div>
     </div>
   );
