@@ -1,6 +1,7 @@
 const initialState = {
   allProjects: [],
-  filteredProjects: []
+  filteredProjects: [],
+  
 };
 
 const reducer = (state = initialState, action) => {

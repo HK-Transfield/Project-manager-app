@@ -10,17 +10,27 @@ const Searchbar = () => {
     
     const dispatch = useDispatch();
 
+    /**
+     * 
+     * @param {event} event 
+     */
     const filterByIinput = (event) => {
         let input = event.target.value;
+
         dispatch({
             type: 'FILTER_BY_VALUE',
             payload: input
         });
     }
 
+    /**
+     * 
+     * @param {event} event 
+     */
     const sortByInput = (event) => {
         let sortOrder = event.endsWith('asc') ? 'asc' : 'desc';
         let sortField = event.startsWith('projectName') ? 'projectName' : 'start_date';
+        
         dispatch({
             type: 'SORT_PROJECTS',
             payload: {
@@ -34,21 +44,23 @@ const Searchbar = () => {
         <InputGroup className='searchbar'>
             <InputGroup.Prepend>
 
-                {/*|| Filter projects */}
+                {/* controls to filter projects */}
                 <DropdownButton
                     variant='secondary'
                     title='Sort By...'
                     onSelect={(event) => sortByInput(event)}
                 >
+                    {/* filter project names in ascending or descending order */}
                     <Dropdown.Item eventKey='projectName-asc' >Project Names, Ascending</Dropdown.Item>
                     <Dropdown.Item eventKey='projectName-desc'>Project Names, Descending</Dropdown.Item>
                     <Dropdown.Divider/>
+                    {/* filter start date in ascending or descending order */}
                     <Dropdown.Item eventKey='start_date-asc'>Start Date, Ascending</Dropdown.Item>
                     <Dropdown.Item eventKey='start_date-desc'>Start Date, Descending</Dropdown.Item>
                 </DropdownButton>
             </InputGroup.Prepend>
 
-            {/*|| Search bar */}
+            {/* control to search all projects */}
             <Form.Control
                 onChange={(event) => filterByIinput(event)}
                 className='test'

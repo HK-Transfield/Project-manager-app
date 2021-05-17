@@ -3,6 +3,7 @@ import '../css/Header.css';
 
 /**
  * Renders a header displaying the title of the web application.
+ * This header will extend across the entire page.
  * 
  * @param {string} props.title The name of the application to be displayed
  * @author Harmon Transfield
