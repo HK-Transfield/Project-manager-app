@@ -60,7 +60,7 @@ const CreateProjectForm = () => {
      * 
      * @param {event} event The user inputting data into the form.
      */
-    const handleChange = (event) => {
+    const handleChange = event => {
         let {name, value} = event.target;
 
         setFields({...fields, [name]:value});
@@ -121,7 +121,7 @@ const CreateProjectForm = () => {
      * 
      * @param {event} event User clicks on the submit button 
      */
-    const handleSubmit = (event) => {
+    const handleSubmit = event => {
         // Stop the HTML default form submit
         event.preventDefault();
         

@@ -1,9 +1,8 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import '../css/CreateProjectForm.css';
-import '../css/DisplayModal.css';
 import CreateProjectForm from './CreateProjectForm';
+import '../css/CreateProjectButton.css';
 
  /**
   * Uses a bootstrap modal to display a create project form.
@@ -11,7 +10,7 @@ import CreateProjectForm from './CreateProjectForm';
   * 
   * @returns The DOM containing the modal and form 
   */
-const CreateProjectModal = () => {
+const CreateProjectButton = () => {
     // declare state using hooks
     const [showModal, setShowModal] = useState(false);
 
@@ -36,4 +35,4 @@ const CreateProjectModal = () => {
     );
 }
   
-  export default CreateProjectModal;
+  export default CreateProjectButton;

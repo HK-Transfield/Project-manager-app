@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './components/Header';
 import Searchbar from './components/Searchbar';
-import CreateProjectModal from './components/CreateProjectModal';
-import ProjectCollection from './components/ProjectCollection';
+import CreateProjectButton from './components/CreateProjectButton';
+import ProjectList from './components/ProjectList';
 import './App.css';
 
 /**
@@ -59,7 +59,7 @@ const App = () => {
 
         {/* user controls for user to add, search, and filter projects */}
         <div className='input-container'>
-            <CreateProjectModal/>
+            <CreateProjectButton/>
             <Searchbar
               filterOption1={projectNameFilter}
               filterOption2={startDateFilter}
@@ -67,7 +67,7 @@ const App = () => {
         </div>
 
         {/* this is where all projects will be displayed */}
-        <ProjectCollection projects={myProjects.filteredProjects}/>
+        <ProjectList projects={myProjects.filteredProjects}/>
       </div>
     </div>
   );

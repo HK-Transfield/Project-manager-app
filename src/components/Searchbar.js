@@ -29,7 +29,7 @@ const Searchbar = ({filterOption1, filterOption2}) => {
      * 
      * @param {event} event The user input.
      */
-    const filterByIinput = (event) => {
+    const filterByIinput = event => {
         let input = event.target.value;
 
         dispatch({
@@ -43,7 +43,7 @@ const Searchbar = ({filterOption1, filterOption2}) => {
      * 
      * @param {event} event  The user clicks on one of the dropdown options.
      */
-    const sortByInput = (event) => {
+    const sortByInput = event => {
         // determine what the user wants to sort
         let sortOrder = event.endsWith('asc') ? 'asc' : 'desc';
         let sortField = event.startsWith(filterOption1.className) ? filterOption1.className : filterOption2.className;
@@ -58,7 +58,7 @@ const Searchbar = ({filterOption1, filterOption2}) => {
     }
     
     return(
-        <InputGroup className='searchbar'>
+        <InputGroup className='search-filter-ctrls'>
             <InputGroup.Prepend>
 
                 {/* controls to filter projects */}
@@ -80,7 +80,7 @@ const Searchbar = ({filterOption1, filterOption2}) => {
             {/* control to search all projects */}
             <Form.Control
                 onChange={(event) => filterByIinput(event)}
-                className='test'
+                className='searchbar'
                 placeholder='Search for a project...'
             />
         </InputGroup>

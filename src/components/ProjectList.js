@@ -1,6 +1,6 @@
 import React from 'react';
 import ProjectCard from './ProjectCard';
-import '../css/ProjectCollection.css';
+import '../css/ProjectList.css';
 
 /**
  * Maps through an array of projects added by either the user or fetched
@@ -10,7 +10,7 @@ import '../css/ProjectCollection.css';
  * @param {array} projects Contains all current products that are stored 
  * @returns JSX of all projects, displayed as project cards
  */
-const ProjectCollection = ({projects}) => {
+const ProjectList = ({projects}) => {
     return(
         <div className='project_cards-container'>
           {projects.map(item => {
@@ -19,4 +19,4 @@ const ProjectCollection = ({projects}) => {
         </div>
     );
 }
-export default ProjectCollection;
+export default ProjectList;
