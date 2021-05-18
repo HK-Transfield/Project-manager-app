@@ -8,10 +8,11 @@ import ProjectCollection from './components/ProjectCollection';
 import './App.css';
 
 /**
- * The main compononent, which will act as a container for 
+ * The main compononent, which acts as a container for 
  * all other components.
  * 
  * @returns The entire project manager application DOM
+ * 
  * @author Harmon Transfield
  */
 const App = () => {
@@ -20,9 +21,21 @@ const App = () => {
   const myProjects = useSelector(state => state); // retrieves the project data from the store
   const dispatch = useDispatch(); // used to dispatch redux actions
 
+  // define filters for the dropdown button
+  const [projectNameFilter, startDateFilter] = [
+    {
+      name: 'Project Name',
+      className: 'projectName'
+    }, 
+    {
+      name: 'Start Date',
+      className: 'start_date'
+    }
+  ];
+
   /**
    * Lifecycle method. Used to fetch the data from the server
-   * and then add them to the redux store.
+   * and then dispatch them to the redux store.
    */
   useEffect(() => {
     fetch('./data.json')
@@ -47,7 +60,10 @@ const App = () => {
         {/* user controls for user to add, search, and filter projects */}
         <div className='input-container'>
             <CreateProjectModal/>
-            <Searchbar/>
+            <Searchbar
+              filterOption1={projectNameFilter}
+              filterOption2={startDateFilter}
+            />
         </div>
 
         {/* this is where all projects will be displayed */}

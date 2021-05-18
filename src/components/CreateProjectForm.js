@@ -1,7 +1,8 @@
-import React, { useState, useRef, isValidElement } from "react";
+import React, { useState, useRef } from "react";
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 import { connect, useDispatch } from 'react-redux';
 import '../css/CreateProjectForm.css';
 import '../css/DisplayModal.css';
@@ -37,11 +38,11 @@ const CreateProjectForm = () => {
     const projectFormRef = useRef(null);
     const [valid, setValid] = useState(false);
     const [fields, setFields] = useState(initialState);
-    const[errors, setErrors] = useState({});
+    const [errors, setErrors] = useState({});
 
 
     /**********************
-     * Component Functions
+     * Inner Functions
      **********************/
 
     /**
@@ -50,6 +51,7 @@ const CreateProjectForm = () => {
     const handleReset = () => {
         projectFormRef.current.reset();
         setFields(initialState);
+        setErrors({});
         setValid(false);
     }
 
@@ -74,34 +76,38 @@ const CreateProjectForm = () => {
      */
     const validate = () => {
         let errors = {};
+        let pattern = /^\d*$/; // regex to check if input is a number
 
-         // projectName validation
+         // projectName field is empty
          if(!fields['projectName']) 
          errors['projectNameError'] = "Project name cannot be blank.";
 
-        // project ID validation
+        // project ID field is empty
         if(!fields['projectIdentifier']) 
             errors['projectIdentifierError'] = "Project ID cannot be blank.";
+        
+        // project ID is not a number
+        if(!fields['projectIdentifier'].match(pattern))
+            errors['projectIdentifierError'] = "Project ID must be a number.";
 
-        // description validation
+        // description field is empty
         if(!fields['description']) 
             errors['descriptionError'] = "Please enter a description of your project.";
 
-        // date validations
+        // start date has not been selected
         if(!fields['start_date']) 
             errors['startDateError'] = "Please enter a start date for your project.";
 
+        // end date has not been selected
         if(!fields['end_date']) 
             errors['endDateError'] = "Please enter an end date for your project.";
         
-        // make sure that the end date is not before the start date
+        // end date is set before the start date
         if((new Date(fields['end_date']).getTime() < new Date(fields['start_date']).getTime()))
             errors['endDateError'] = "End date cannot be before the start date.";   
 
         // there are errors in the form
         if(Object.keys(errors).length > 0) {
-            console.log('nooooooooooo')
-            console.log(errors)
             setErrors(errors);
             return false;
         }
@@ -119,16 +125,11 @@ const CreateProjectForm = () => {
         // Stop the HTML default form submit
         event.preventDefault();
         
-        // get the form so that we can check validity
-        let form = event.currentTarget;
-        
-        // perform validation check
-        setValid(validate());
-        
-        if (form.checkValidity() === false) { // check form validity after setting the state
+        if (!valid) { // check form validity after setting the state
             event.stopPropagation();
         }
         else {
+            alert('New project added!')
             // send project to store
             dispatch({
                 type: 'ADD_PROJECT',
@@ -154,12 +155,16 @@ const CreateProjectForm = () => {
                 onSubmit={handleSubmit}
                 ref={projectFormRef}
             >
-                <Form.Group controlId='formProjectDetails'>
+                {/************************
+                * Group -- Project Details
+                **************************/}
+                <Form.Group>
 
                     {/*|| Project name validation */}
                     <Form.Control 
                         required
                         name='projectName'
+                        id='projectName-ctrl'
                         type='text'
                         placeholder='Project Name' 
                         onChange={handleChange}
@@ -174,6 +179,7 @@ const CreateProjectForm = () => {
                     <Form.Control 
                         required
                         name='projectIdentifier'
+                        id='projectIdentifier-ctrl'
                         type='text'
                         placeholder='Project ID' 
                         onChange={handleChange}
@@ -188,6 +194,7 @@ const CreateProjectForm = () => {
                     <Form.Control 
                         required
                         name='description'
+                        id='description-ctrl'
                         as='textarea'
                         placeholder='Project Description'
                         onChange={handleChange} 
@@ -198,14 +205,18 @@ const CreateProjectForm = () => {
                     </FormControl.Feedback>
                 </Form.Group>
 
-                    
-                <Form.Group controlId='formProjectDates'>
+                
+                {/************************
+                * Group -- Project Dates
+                **************************/}
+                <Form.Group>
 
                     {/*|| Project start date validation*/}
                     <Form.Label>Start Date</Form.Label>
                     <Form.Control 
                         required
                         name='start_date'
+                        id='start-date-ctrl'
                         type='date' 
                         placeholder='dd/mm/yyyy' 
                         onChange={handleChange}
@@ -221,6 +232,7 @@ const CreateProjectForm = () => {
                     <Form.Control 
                         required
                         name='end_date'
+                        id='end-date-ctrl'
                         type='date' 
                         placeholder='dd/mm/yyyy'
                         onChange={handleChange}
@@ -231,6 +243,7 @@ const CreateProjectForm = () => {
                     </FormControl.Feedback>
                 </Form.Group>
                 <Button 
+                    onClick={()=> setValid(validate())}
                     type='submit'
                     className='btn-submit-project' 
                     variant='dark' 

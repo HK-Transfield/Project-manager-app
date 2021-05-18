@@ -7,7 +7,8 @@ import '../css/ProjectCard.css';
 
 /**
  * Displays a react-bootstrap popover component to 
- * display the project description
+ * display the project description when the user
+ * hovers over the project ID
  * 
  * @param {string} description Information that describes what the project is about.
  */
@@ -17,8 +18,21 @@ const popover = (description) => (
     </Popover>
 );
 
-// https://blog.bitsrc.io/add-a-simple-search-function-to-react-app-without-a-server-22deda8966cd
-const ProjectCard = ({projectName, description, projectIdentifier, start_date, end_date}) => {
+/**
+ * Using react-bootrap, this funcitonal component displays information
+ * about a project
+ * 
+ * @param {string} props.projectName 
+ * @param {string} props.projectIdentifier 
+ * @param {string} props.description 
+ * @param {date} props.start_date
+ * @param {date} props.end_date 
+ * 
+ * @returns The DOM of a project card
+ * 
+ * @author Harmon Transfield 
+ */
+const ProjectCard = ({projectName, projectIdentifier, description, start_date, end_date}) => {
      
     return(
         <Card className='project-entry'>
