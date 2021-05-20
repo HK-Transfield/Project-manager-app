@@ -1,3 +1,10 @@
+/**
+ * Displays all the information of 
+ * a single project in a card.
+ *
+ * @author Harmon Transfield
+ */
+
 .card-title {
   color: #4639a7;
   display: inline-block;
@@ -8,6 +15,10 @@
 .card.project-entry {
   width: 70em;
   border-radius: 0px;
+}
+
+.card.project-entry:hover {
+  cursor: pointer;
 }
 
 .card-details {

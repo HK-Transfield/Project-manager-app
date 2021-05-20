@@ -17,21 +17,18 @@ const CreateProjectButton = () => {
     // declare state using hooks
     const [showModal, setShowModal] = useState(false);
 
-    // define functions to handle state of modal
-    const handleCloseModal = () => setShowModal(false);
-    const handleShowModal = () => setShowModal(true);
-
     return(
         <div>
             <Button  
                 className='btn-show-modal'
                 variant='outline-primary' 
-                onClick={handleShowModal}
+                onClick={() => setShowModal(true)}
             >
                 Create A New Project
             </Button>
-            <Modal show={showModal} onHide={handleCloseModal}>
-                    <CreateProjectForm/>
+            <Modal show={showModal} onHide={() => setShowModal(false)} closeButton>
+                   <Modal.Header closeButton/>
+                   <CreateProjectForm/>
             </Modal>
         </div>
     );

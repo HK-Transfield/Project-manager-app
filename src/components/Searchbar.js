@@ -12,14 +12,14 @@ import '../css/Searchbar.css';
  * or descending order. It uses react-bootstrap for its 
  * design.
  * 
- * @param {object} props.filterOption1 
- * @param {object} props.filterOption2 
+ * @param {object} props.sortProjectNameFilters 
+ * @param {object} props.sortStartDateFilters 
  * 
  * @returns The DOM of the search bar and dropdown menu.
  * 
  * @author Harmon Transfield
  */
-const Searchbar = ({filterOption1, filterOption2, filterOptions}) => {
+const Searchbar = ({sortProjectNameFilters, sortStartDateFilters}) => {
     
     const dispatch = useDispatch();
     const [activeItem, setActiveItem] = useState();
@@ -51,7 +51,7 @@ const Searchbar = ({filterOption1, filterOption2, filterOptions}) => {
 
         // determine what the user wants to sort
         let sortOrder = event.endsWith('asc') ? 'asc' : 'desc';
-        let sortField = event.startsWith(filterOption1.className) ? filterOption1.className : filterOption2.className;
+        let sortField = event.startsWith(sortProjectNameFilters.className) ? sortProjectNameFilters.className : sortStartDateFilters.className;
         
         dispatch({
             type: 'SORT_PROJECTS',
@@ -74,30 +74,30 @@ const Searchbar = ({filterOption1, filterOption2, filterOptions}) => {
                 >
                     {/* filter project names in ascending or descending order */}
                     <Dropdown.Item 
-                        eventKey={`${filterOption1.className}-asc`} 
-                        active={activeItem === `${filterOption1.className}-asc`}
+                        eventKey={`${sortProjectNameFilters.className}-asc`} 
+                        active={activeItem === `${sortProjectNameFilters.className}-asc`}
                     >
-                        {filterOption1.name}, <span className='sort-key'>Ascending</span> 
+                        {sortProjectNameFilters.name} <span className='sort-key'>Ascending</span> 
                     </Dropdown.Item>
                     <Dropdown.Item 
-                        eventKey={`${filterOption1.className}-desc`}
-                        active={activeItem === `${filterOption1.className}-desc`}
+                        eventKey={`${sortProjectNameFilters.className}-desc`}
+                        active={activeItem === `${sortProjectNameFilters.className}-desc`}
                     >
-                        {filterOption1.name}, <span className='sort-key'>Descending</span>
+                        {sortProjectNameFilters.name} <span className='sort-key'>Descending</span>
                     </Dropdown.Item>
                     <Dropdown.Divider/>
                     {/* filter start date in ascending or descending order */}
                     <Dropdown.Item 
-                        eventKey={`${filterOption2.className}-asc`} 
-                        active={activeItem === `${filterOption2.className}-asc`}
+                        eventKey={`${sortStartDateFilters.className}-asc`} 
+                        active={activeItem === `${sortStartDateFilters.className}-asc`}
                     >
-                        {filterOption2.name}, <span className='sort-key'>Ascending</span>
+                        {sortStartDateFilters.name} <span className='sort-key'>Ascending</span>
                     </Dropdown.Item>
                     <Dropdown.Item 
-                        eventKey={`${filterOption2.className}-desc`} 
-                        active={activeItem === `${filterOption2.className}-desc`} 
+                        eventKey={`${sortStartDateFilters.className}-desc`} 
+                        active={activeItem === `${sortStartDateFilters.className}-desc`} 
                     >
-                        {filterOption2.name},  <span className='sort-key'>Descending</span>
+                        {sortStartDateFilters.name}  <span className='sort-key'>Descending</span>
                     </Dropdown.Item>
                 </DropdownButton>
             </InputGroup.Prepend>

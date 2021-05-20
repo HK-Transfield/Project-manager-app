@@ -2,14 +2,14 @@ import React, { useState, useRef } from "react";
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
-import Alert from 'react-bootstrap/Alert';
+import { AlertSuccess } from './Alerts';
 import { connect, useDispatch } from 'react-redux';
 import '../css/CreateProjectForm.css';
 
 /**
  * Used to set the field state to have no values.
  */
-const initialState = {
+const initialFormState = {
     projectName: "",
     projectIdentifier: "",
     description: "",
@@ -36,7 +36,9 @@ const CreateProjectForm = () => {
     const dispatch = useDispatch();
     const projectFormRef = useRef(null);
     const [valid, setValid] = useState(false);
-    const [fields, setFields] = useState(initialState);
+    const [submitted, setSubmitted] = useState(false);
+    const [newestProject, setNewestProject] = useState('');
+    const [fields, setFields] = useState(initialFormState);
     const [errors, setErrors] = useState({});
 
 
@@ -49,7 +51,7 @@ const CreateProjectForm = () => {
      */
     const handleReset = () => {
         projectFormRef.current.reset();
-        setFields(initialState);
+        setFields(initialFormState);
         setErrors({});
         setValid(false);
     }
@@ -125,11 +127,13 @@ const CreateProjectForm = () => {
         event.preventDefault();
         
         if (!valid) { // check form validity after setting the state
+            setSubmitted(false);
             event.stopPropagation();
         }
         else {
-            alert('New project added!')
-            // send project to store
+            setSubmitted(true);
+            setNewestProject(fields['projectName']);
+            // trigger reducer function and update state with new project
             dispatch({
                 type: 'ADD_PROJECT',
                 payload: fields
@@ -159,7 +163,7 @@ const CreateProjectForm = () => {
                 **************************/}
                 <Form.Group>
 
-                    {/*|| Project name validation */}
+                    {/*|| Project name form input */}
                     <Form.Control 
                         required
                         name='projectName'
@@ -174,7 +178,7 @@ const CreateProjectForm = () => {
                     </FormControl.Feedback>
                     <br/>
                     
-                    {/*|| Project identifier validation */}
+                    {/*|| Project identifier form input */}
                     <Form.Control 
                         required
                         name='projectIdentifier'
@@ -189,7 +193,7 @@ const CreateProjectForm = () => {
                     </FormControl.Feedback>
                     <br/>
                     
-                    {/*|| Project description validation */}
+                    {/*|| Project description form input */}
                     <Form.Control 
                         required
                         name='description'
@@ -251,6 +255,9 @@ const CreateProjectForm = () => {
                     Create Project
                 </Button>
             </Form>
+
+            {/* if the user successfully submits a valid project, it will display this alert */}
+            {submitted ? <AlertSuccess newestProject={newestProject}/> : null}
         </div>
     );
 

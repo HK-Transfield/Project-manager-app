@@ -38,7 +38,7 @@ const ProjectCard = ({projectName, projectIdentifier, description, start_date, e
         <Card className='project-entry'>
             <Card.Body>
                 <div className='card-details'>
-                    <DeleteButton projectIdentifier={projectIdentifier}/>
+                    <DeleteButton projectIdentifier={projectIdentifier} projectName={projectName}/>
                     <OverlayTrigger placement='right' overlay={popover(description)}>
                         <Card.Title>Project {projectIdentifier}</Card.Title>
                     </OverlayTrigger>

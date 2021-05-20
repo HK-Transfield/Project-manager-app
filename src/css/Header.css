@@ -1,3 +1,11 @@
+/**
+ * Displays a banner across the top of the page
+ * with the name of the application in the
+ * centre.
+ *
+ * @author Harmon Transfield
+ */
+
 .header-container {
   width: 100vw;
   height: 6em;

@@ -1,3 +1,11 @@
+/**
+ * The form where users can create a new project
+ * and add it to their list of projects.
+ *
+ * @author Harmon Transfield
+ */
+
+/* || Container */
 .form-container {
   justify-content: center;
   margin: 20px;
@@ -26,5 +34,10 @@
 }
 
 .btn.btn-submit-project {
-  border: none;
+  border: none; /*  Remove the border set by react-bootstrap */
+}
+
+.alert.alert-success {
+  margin-top: 15px;
+  margin-bottom: 0px;
 }

@@ -1,10 +1,16 @@
+/**
+ * A button that will open the modal containing
+ * the form to create a new project.
+ *
+ * @author Harmon Transfield
+ */
+
 .btn.btn-show-modal {
-  opacity: 0.8;
-  filter: contrast(1.1);
   transition: 0.3s;
   float: right;
 }
 
-.btn.btn-show-modal:hover {
-  opacity: 1;
+.modal-header {
+  border-bottom: 0;
+  height: 5px;
 }

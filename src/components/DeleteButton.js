@@ -12,7 +12,7 @@ import { connect, useDispatch } from 'react-redux';
  * 
  * @author Harmon Transfield
  */
-const DeleteButton = ({projectIdentifier}) => {
+const DeleteButton = ({projectIdentifier, projectName}) => {
     const dispatch = useDispatch();
 
     return(
@@ -21,7 +21,10 @@ const DeleteButton = ({projectIdentifier}) => {
             onClick={
                 () => dispatch({
                     type: 'DELETE_PROJECT',
-                    payload: projectIdentifier
+                    payload: {
+                        deletedProjectIdentifier: projectIdentifier,
+                        deletedProjectName: projectName
+                    }
                 })
             }
         >
