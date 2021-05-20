@@ -5,7 +5,6 @@ import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import { connect, useDispatch } from 'react-redux';
 import '../css/CreateProjectForm.css';
-import '../css/DisplayModal.css';
 
 /**
  * Used to set the field state to have no values.

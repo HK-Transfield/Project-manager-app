@@ -6,8 +6,6 @@
 const initialState = {
   allProjects: [],      // tracks every project the user adds to the app
   filteredProjects: [], // tracks any filters or search terms applied 
-  sortField: '',
-  sortOrder: '',
   searchValue: ''
 };
 
@@ -17,7 +15,7 @@ const initialState = {
  * @param {object} state 
  * @param {prop} action Determines the changes being made to the state.
  * 
- * @returns The state of the reducer containing all projects.
+ * @returns The state of the reducer, where projects can be accessed.
  * 
  * @author Harmon Transfield
  */
@@ -30,19 +28,18 @@ const reducer = (state = initialState, action) => {
      * action, adding it to the state
      */
     case "ADD_PROJECT":
-      console.log(state.searchValue)
-
-      if(!state.searchValue)
+      if(!state.searchValue)  // no input in search bar
         return Object.assign({}, state, {
           allProjects: [...state.allProjects, action.payload],
           filteredProjects: [...state.allProjects, action.payload]
         });
-      else
+      else  // characters are found in the search bar
         return Object.assign({}, state, {
           allProjects: [...state.allProjects, action.payload],
-          filteredProjects: filterProjects(state.allProjects, state.searchValue),
+          filteredProjects: filterProjects(state.filteredProjects, state.searchValue).concat(action.payload),
         });
-    
+      
+        
     /**
      * When the user clicks the delete button on the project card it will call the 
      * DELETE_PROJECT action and the associated project will be removed from the 
@@ -50,8 +47,8 @@ const reducer = (state = initialState, action) => {
      */
     case "DELETE_PROJECT":
       return Object.assign({}, state, {
-        allProjects: state.allProjects.filter((project) => project.projectIdentifier !== action.payload),
-        filteredProjects: state.filteredProjects.filter((project) => project.projectIdentifier !== action.payload),
+        allProjects: state.allProjects.filter(project => project.projectIdentifier !== action.payload),
+        filteredProjects: state.filteredProjects.filter(project => project.projectIdentifier !== action.payload),
       });
 
     /**
@@ -81,39 +78,17 @@ const reducer = (state = initialState, action) => {
      */
     case 'SORT_PROJECTS':
       let {order, field} = action.payload;
-
-      if (order === 'asc')
+      
+      if (order === 'asc') 
         return Object.assign({}, state, {
-          filteredProjects: state.allProjects.sort(
-            (a,b) => {
-              if(a[field] > b[field])
-                return 1;
-              
-              if(b[field] > a[field])
-                return -1;
-              
-              return 0;
-            }
-          ),
-          sortField: field,
-          sortOrder: order
+          allProjects: sortAsc(state.allProjects, field),
+          filteredProjects: sortAsc(state.filteredProjects, field), 
         });
 
       else if (order === 'desc')
         return Object.assign({}, state, {
-          filteredProjects: state.allProjects.sort(
-            (a,b) => {
-              if(a[field] > b[field])
-                return -1;
-              
-              if(b[field] > a[field])
-                return 1;
-          
-              return 0;
-            }
-          ),
-          sortField: field,
-          sortOrder: order
+          allProjects: sortDesc(state.allProjects, field),
+          filteredProjects: sortDesc(state.filteredProjects, field),
         });
       return state;
 
@@ -128,8 +103,8 @@ export default reducer;
  * Filters an array based on a search value is passed
  * into it.
  * 
- * @param {array} arr 
- * @param {string} val 
+ * @param {array} arr The original array that will be filtered
+ * @param {string} val The value so search in the array
  * 
  * @returns The newly filtered array 
  */
@@ -140,5 +115,49 @@ const filterProjects = (arr, val) => {
     item.description.toLowerCase().includes(val) ||
     item.start_date.toLowerCase().includes(val) ||
     item.end_date.toLowerCase().includes(val)              
+  );
+}
+
+/**
+ * Sorts items in an array in ascending order.
+ * 
+ * @param {array} arr The array that will be sorted
+ * @param {prop} field Which property of an item used to sort
+ *  
+ * @returns The newly sorted array
+ */
+const sortAsc = (arr, field) => {
+  return arr.sort(
+    (a,b) => {
+      if(a[field] > b[field])
+        return 1;
+      
+      if(b[field] > a[field])
+        return -1;
+      
+      return 0;
+    }
+  );
+}
+
+/**
+ * Sort items in an array in descending order.
+ * 
+ * @param {array} arr The array that will be sorted
+ * @param {prop} field Which property of an item used to sort
+ *  
+ * @returns 
+ */
+const sortDesc = (arr, field) => {
+  return arr.sort(
+    (a,b) => {
+      if(a[field] > b[field])
+        return -1;
+      
+      if(b[field] > a[field])
+        return 1;
+  
+      return 0;
+    }
   );
 }
