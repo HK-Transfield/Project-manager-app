@@ -1,10 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './components/Header';
 import Searchbar from './components/Searchbar';
-import CreateProjectModal from './components/CreateProjectModal';
-import ProjectCollection from './components/ProjectCollection';
+import CreateProjectButton from './components/CreateProjectButton';
+import ProjectList from './components/ProjectList';
 import './App.css';
 
 /**
@@ -23,6 +23,17 @@ const App = () => {
 
   // define filters for the dropdown button
   const [projectNameFilter, startDateFilter] = [
+    {
+      name: 'Project Name',
+      className: 'projectName'
+    }, 
+    {
+      name: 'Start Date',
+      className: 'start_date'
+    }
+  ];
+
+  const projectFilterOptions = [
     {
       name: 'Project Name',
       className: 'projectName'
@@ -59,15 +70,16 @@ const App = () => {
 
         {/* user controls for user to add, search, and filter projects */}
         <div className='input-container'>
-            <CreateProjectModal/>
+            <CreateProjectButton/>
             <Searchbar
               filterOption1={projectNameFilter}
               filterOption2={startDateFilter}
+              filterOptions={projectFilterOptions}
             />
         </div>
 
         {/* this is where all projects will be displayed */}
-        <ProjectCollection projects={myProjects.filteredProjects}/>
+        <ProjectList projects={myProjects.filteredProjects}/>
       </div>
     </div>
   );

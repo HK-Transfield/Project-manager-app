@@ -1,15 +1,25 @@
-.searchbar {
+/*\\ CONTAINER */
+.dropdown-menu.show {
+  width: 250px;
+}
+
+.search-filter-ctrls {
   width: 500px;
 }
 
-.form-control.test {
-  width: 200px;
+/* Styles for searchbar */
+.form-control.searchbar {
   display: inline-block;
   border-bottom-left-radius: 0px;
   border-top-left-radius: 0px;
 }
 
+/* Remove border radius from dropdown menu */
 .btn.dropdown-toggle {
   border-bottom-right-radius: 0px;
   border-top-right-radius: 0px;
+}
+
+.sort-key {
+  float: right;
 }

@@ -12,7 +12,7 @@ import '../css/ProjectCard.css';
  * 
  * @param {string} description Information that describes what the project is about.
  */
-const popover = (description) => (
+const popover = description => (
     <Popover id="popover-basic">
       <Popover.Content>{description}</Popover.Content>
     </Popover>

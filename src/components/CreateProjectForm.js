@@ -5,7 +5,6 @@ import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import { connect, useDispatch } from 'react-redux';
 import '../css/CreateProjectForm.css';
-import '../css/DisplayModal.css';
 
 /**
  * Used to set the field state to have no values.
@@ -60,7 +59,7 @@ const CreateProjectForm = () => {
      * 
      * @param {event} event The user inputting data into the form.
      */
-    const handleChange = (event) => {
+    const handleChange = event => {
         let {name, value} = event.target;
 
         setFields({...fields, [name]:value});
@@ -121,7 +120,7 @@ const CreateProjectForm = () => {
      * 
      * @param {event} event User clicks on the submit button 
      */
-    const handleSubmit = (event) => {
+    const handleSubmit = event => {
         // Stop the HTML default form submit
         event.preventDefault();
         
