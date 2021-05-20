@@ -33,6 +33,17 @@ const App = () => {
     }
   ];
 
+  const projectFilterOptions = [
+    {
+      name: 'Project Name',
+      className: 'projectName'
+    }, 
+    {
+      name: 'Start Date',
+      className: 'start_date'
+    }
+  ];
+
   /**
    * Lifecycle method. Used to fetch the data from the server
    * and then dispatch them to the redux store.
@@ -63,6 +74,7 @@ const App = () => {
             <Searchbar
               filterOption1={projectNameFilter}
               filterOption2={startDateFilter}
+              filterOptions={projectFilterOptions}
             />
         </div>
 

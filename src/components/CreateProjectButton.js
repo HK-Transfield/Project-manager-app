@@ -8,13 +8,16 @@ import '../css/CreateProjectButton.css';
   * Uses a bootstrap modal to display a create project form.
   * This can be opened with a button
   * 
-  * @returns The DOM containing the modal and form 
+  * @returns The DOM of the button and modal
+  * 
+  * @author Harmon Transfield
   */
 const CreateProjectButton = () => {
+
     // declare state using hooks
     const [showModal, setShowModal] = useState(false);
 
-    // define functions to handle state
+    // define functions to handle state of modal
     const handleCloseModal = () => setShowModal(false);
     const handleShowModal = () => setShowModal(true);
 
@@ -27,7 +30,6 @@ const CreateProjectButton = () => {
             >
                 Create A New Project
             </Button>
-
             <Modal show={showModal} onHide={handleCloseModal}>
                     <CreateProjectForm/>
             </Modal>

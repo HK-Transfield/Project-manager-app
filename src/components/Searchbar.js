@@ -19,7 +19,7 @@ import '../css/Searchbar.css';
  * 
  * @author Harmon Transfield
  */
-const Searchbar = ({filterOption1, filterOption2}) => {
+const Searchbar = ({filterOption1, filterOption2, filterOptions}) => {
     
     const dispatch = useDispatch();
     const [activeItem, setActiveItem] = useState();
